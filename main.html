@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body
+            {
+                text-align: center;
+                background-color: black;
+            }
+            .flex-container
+            {
+                display: flex;
+                align-items: center;
+                background-color: red;
+            }
+            table
+            {
+                font-size: 30px;
+                width: 60vw;
+                position: relative;
+                margin-top: 70vh;
+            }
+            th
+            {
+                height: 3em;
+                color: white;
+                border-radius: 1em;
+                font-size: 0.75em;
+                background-color: #467592;
+            }
+            td
+            {
+                height: 2em;
+                border-radius: 0.5em;
+                font-size: 0.75em;
+                background-color:#b9cdd2;
+                color: black; 
+            }
+        </style>
+    </head>
+
+    <body>
+            <table cellpadding="5" width="100%"  align="center">
+                <tr>
+                    <th colspan="3"  >STATE</th>
+                    <th colspan="3"  >HOSPITAL BEDS AVAILABLE(APPROX.)</th>
+                </tr>
+                <tr ng-repeat="x in locInfo">
+                    <td colspan="3" >{{x.state}}</td>
+                    <td >{{x.activeCases}}</td>
+                </tr>
+            </table>
+                
+        </div>
+    </body>
+</html>
