@@ -27,6 +27,9 @@ beds={
     "Andhra Pradesh":"83937",
     "West Bengal":"409317",
     "Ladakh":"-1",
+    "Assam":"-1",
+    "Himachal Pradesh":"-1",
+    "Jharkhand":"-1",
     "Bihar":"29815",
     "Andaman and Nicobar Islands":"2321",
     "Chandigarh":"4534",
@@ -44,6 +47,7 @@ beds={
                                 //console.log(beds[$scope.locInfo[i].state])
                                 x=parseInt($scope.locInfo[i].activeCases)
                                 y=parseInt(beds[$scope.locInfo[i].state])
+                                console.log(y)
                                 diff=y-x
                                 if(y==-1)
                                 {

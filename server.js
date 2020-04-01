@@ -36,6 +36,9 @@ http.createServer(function(req, res){
 		{
 			var spawn=require('child_process').spawn;
 			var Newprocess=spawn('python', ['./hospitalTrackerScrapingSite.py']);
+			Newprocess.stdout.on('data', function(data) { 
+				console.log(data.toString()); 
+			}) 
 			console.log("SUCCESSFULLY EXECUTED THE SCRIPT")
 		}
 		/*Code for python ends*/
