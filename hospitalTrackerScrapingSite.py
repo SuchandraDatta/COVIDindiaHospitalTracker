@@ -33,8 +33,6 @@ print(driver.title)
 #Go front
 #driver.forward()
 
-#Get ss
-#driver.save_screenshot('testing.png')
 
 #Pull the code
 dummyContent=driver.page_source
@@ -47,23 +45,28 @@ soup = BeautifulSoup(dummyContent, 'lxml')
 
 
 getStates=soup.find_all("tr", class_="state")
+for i in range(0, len(getStates)):
+    print(getStates[i])
+    #dummy=input('enter to proceed: ')
 
 import re
 states=[]
 states=re.findall(r'>[a-zA-Z\s]+<', str(getStates))    
 print(states)
+print("No. of states: ", len(states))
+
 
 allCases=[]
-allCases=re.findall(r'<td style="color: rgb\(181, 181, 181\);">-</td>|<td style="color: inherit;">[0-9]+</td>', str(getStates))
-
+#allCases=re.findall(r'<td style="color: rgb\(181, 181, 181\);">-</td>|<td style="color: inherit;">[0-9]+</td>', str(getStates))
+allCases=re.findall(r'<td style="color: inherit;">[0-9]+[,]*[0-9]+</td>', str(getStates))
 print(allCases)
 
 eachStateCase=[]
 dataDict=[]
 i=0
 pos=0
-while(i<len(allCases)-3):
-    confirmedCases=re.findall(r'>[0-9]+<', str(allCases[i]))
+while(i<len(allCases)-1):
+    confirmedCases=re.findall(r'>[0-9]+[,]*[0-9]+<', str(allCases[i]))
     key=states[pos][1:-1]
     pos=pos+1
     print(confirmedCases)
@@ -74,7 +77,7 @@ while(i<len(allCases)-3):
         dataDict.append(dataDictTerm)
         #dataDict[key]=confirmedCases[0][1:-1]
         print("key ", key, " value", confirmedCases[0][1:-1])
-    i=i+3
+    i=i+1
 
 import json
 json_string=json.dumps(dataDict)

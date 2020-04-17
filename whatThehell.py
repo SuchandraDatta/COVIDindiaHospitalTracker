@@ -1,0 +1,5 @@
+import re
+dummy=['<tr class="state"><td style="font-weight: 600;"><div class="table__title-wrapper"><span class="dropdown rotateDownRight"><svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"></polyline></svg></span><span class="actual__title-wrapper">Maharashtra</span></div></td><td><span class="deltas" style="color: rgb(255, 7, 58);"></span><span class="table__count-text">3,202</span></td><td style="color: inherit;">2,708</td><td style="color: inherit;"><span class="deltas" style="color: rgb(40, 167, 69);"></span><span class="table__count-text">300</span></td><td style="color: inherit;"><span class="deltas" style="color: rgb(108, 117, 125);"></span><span class="table__count-text">194</span></td></tr>']
+
+allCases=re.findall(r'<td style="color: inherit;">[0-9]+[,]*[0-9]+</td>', str(dummy))
+print(allCases)

@@ -8,9 +8,10 @@ function($scope, $http){
     $http.get('./dataFromScraping.json')
         .then( function(response)
                     {   console.log(response.data)
+                        console.log("\nPrinted the info from json")
                         $scope.locInfo=response.data;
 
-beds={
+                        beds={
     "Maharashtra":"120444",
     "Kerala":"77515",
     "Karnataka":"126498",
@@ -40,14 +41,18 @@ beds={
     "Manipur":"3989",
     "Mizoram":"4309",
     "Puducherry":"8031"
-}
+                        }
                         for(i=0;i<$scope.locInfo.length;i++)
                             {
-                                //console.log($scope.locInfo[i].activeCases)
-                                //console.log(beds[$scope.locInfo[i].state])
-                                x=parseInt($scope.locInfo[i].activeCases)
+                                activeCasesStr=$scope.locInfo[i].activeCases
+                                //for numbers in 1000 and above
+                                if(activeCasesStr.indexOf(',')!=-1)
+                                {
+                                    activeCasesStr=activeCasesStr.substring(0,activeCasesStr.indexOf(','))+activeCasesStr.substring(activeCasesStr.indexOf(',')+1);
+                                }
+                                x=parseInt(activeCasesStr)
                                 y=parseInt(beds[$scope.locInfo[i].state])
-                                console.log(y)
+                                console.log("x=" + x)
                                 diff=y-x
                                 if(y==-1)
                                 {
