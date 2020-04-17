@@ -6,7 +6,7 @@ Tech used to realize this
 
 :herb: Python has been employed to obtain the number of active cases, state-wise from covid19india.org. At first requests module was used but later it was found that the table in the page is injected by JavaScript after it loads so the html cannot be obtained using requests or urllib. Selenium was used to get the html of the page.
 
-:herb: Once the html is extracted, the table was parsed using the powerful BeautifulSoup library in Python. Will not work if the table layout of the website is updated. The names of states and the corresponding active cases were extracted and stored in a json file.
+:herb: Once the html is extracted, the table was parsed using the powerful BeautifulSoup library in Python. The names of states and the corresponding active cases were extracted and stored in a json file.
 
 :herb:A node.js server was set up to serve pages that uses AngularJS. Server is set up without using express. Within the server, whenever the requested page is the one that displays the table(state and hospital beds), the python script is executed by spawning a child process. Once done, the data is obtained via a get request from within the controller of the angular app and rendered to the screen via simple angular directives like ng-repeat.
 

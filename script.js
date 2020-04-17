@@ -40,7 +40,10 @@ function($scope, $http){
     "Odisha":"35016",
     "Manipur":"3989",
     "Mizoram":"4309",
-    "Puducherry":"8031"
+    "Puducherry":"8031",
+    "Tripura":"-1",
+    "Arunachal Pradesh":"-1",
+    "Meghalaya": "-1"
                         }
                         for(i=0;i<$scope.locInfo.length;i++)
                             {

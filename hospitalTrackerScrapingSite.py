@@ -58,15 +58,15 @@ print("No. of states: ", len(states))
 
 allCases=[]
 #allCases=re.findall(r'<td style="color: rgb\(181, 181, 181\);">-</td>|<td style="color: inherit;">[0-9]+</td>', str(getStates))
-allCases=re.findall(r'<td style="color: inherit;">[0-9]+[,]*[0-9]+</td>', str(getStates))
-print(allCases)
+allCases=re.findall(r'<td style="color: inherit;">[0-9]+[,]*[0-9]+</td>|<td style="color: inherit;">[0-9]*</td>', str(getStates))
+
 
 eachStateCase=[]
 dataDict=[]
 i=0
 pos=0
 while(i<len(allCases)-1):
-    confirmedCases=re.findall(r'>[0-9]+[,]*[0-9]+<', str(allCases[i]))
+    confirmedCases=re.findall(r'>[0-9]+[,]*[0-9]+<|>[0-9]*<', str(allCases[i]))
     key=states[pos][1:-1]
     pos=pos+1
     print(confirmedCases)
@@ -80,6 +80,7 @@ while(i<len(allCases)-1):
     i=i+1
 
 import json
+print("Length of datadict: " , len(dataDict))
 json_string=json.dumps(dataDict)
 print(json_string)
 with open('dataFromScraping.json', 'w+') as f:
