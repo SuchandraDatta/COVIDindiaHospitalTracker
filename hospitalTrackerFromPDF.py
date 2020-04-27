@@ -2,13 +2,6 @@ import requests
 userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36'
 headers={'User-Agent' : userAgent}
 
-
-#regOBJ=requests.get('https://www.mohfw.gov.in/pdf/DistrictWiseList324.pdf', headers=headers)
-
-#open('./dummy.pdf', 'wb').write(regOBJ.content)
-
-#print(regOBJ.content)
-
 # importing required modules 
 import PyPDF2 
   
