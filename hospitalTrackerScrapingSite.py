@@ -3,51 +3,38 @@ driver=webdriver.Chrome(executable_path="C:\\Users\\Suchandra Datta\\chromedrive
 driver.get("https://www.covid19india.org/")
 
 dummyContent=driver.page_source
-print(dummyContent)
 driver.quit()
 
-print(dummyContent)
 from bs4 import BeautifulSoup
-soup = BeautifulSoup(dummyContent, 'lxml')
-
-
-getStates=soup.find_all("tr", class_="state")
-for i in range(0, len(getStates)):
-    print(getStates[i])
-
 import re
+soup = BeautifulSoup(dummyContent, 'lxml')
+step1=soup.find_all("tr", class_="state")
 states=[]
-states=re.findall(r'>[a-zA-Z\s]+<', str(getStates))    
-print(states)
-print("No. of states: ", len(states))
+activeCases=[]
 
 
-allCases=[]
-#allCases=re.findall(r'<td style="color: rgb\(181, 181, 181\);">-</td>|<td style="color: inherit;">[0-9]+</td>', str(getStates))
-allCases=re.findall(r'<td style="color: inherit;">[0-9]+[,]*[0-9]+</td>|<td style="color: inherit;">[0-9]*</td>', str(getStates))
+for rows in step1:
+    stateName=re.findall(r'>[a-zA-Z\s]+<', str(rows))
+    states.append(stateName)
 
+    soup=BeautifulSoup(str(rows), 'lxml')
+    step2=soup.find_all("td")
 
-eachStateCase=[]
-dataDict=[]
-i=0
-pos=0
-while(i<len(allCases)-1):
-    confirmedCases=re.findall(r'>[0-9]+[,]*[0-9]+<|>[0-9]*<', str(allCases[i]))
-    key=states[pos][1:-1]
-    pos=pos+1
-    print(confirmedCases)
-    if(len(confirmedCases)>0):
-        dataDictTerm={}
-        dataDictTerm["state"]=key
-        dataDictTerm["activeCases"]=confirmedCases[0][1:-1]
-        dataDict.append(dataDictTerm)
-        #dataDict[key]=confirmedCases[0][1:-1]
-        print("key ", key, " value", confirmedCases[0][1:-1])
-    i=i+1
+    cases=re.findall(r'[0-9][0-9,]+|[0-9]+', str(step2[2]))
 
+    activeCases.append(cases)
+
+data_dict_array=[]
+for i in range(0, len(activeCases)-1):
+    data_dict_term={}
+    data_dict_term["state"]=states[i][0][1:-1]
+    data_dict_term["activeCases"]=activeCases[i][0]
+    data_dict_array.append(data_dict_term)
+
+print(data_dict_array)
 import json
-print("Length of datadict: " , len(dataDict))
-json_string=json.dumps(dataDict)
+print("Length of datadict: " , len(data_dict_array))
+json_string=json.dumps(data_dict_array)
 print(json_string)
 with open('dataFromScraping.json', 'w+') as f:
-    json.dump(dataDict, f)
+    json.dump(data_dict_array, f)

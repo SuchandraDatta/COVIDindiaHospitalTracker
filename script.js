@@ -43,7 +43,8 @@ function($scope, $http){
     "Puducherry":"8031",
     "Tripura":"-1",
     "Arunachal Pradesh":"-1",
-    "Meghalaya": "-1"
+    "Meghalaya": "-1",
+    "Dadra and Nagar Haveli and Daman and Diu": "-1"
                         }
                         for(i=0;i<$scope.locInfo.length;i++)
                             {
@@ -51,7 +52,9 @@ function($scope, $http){
                                 //for numbers in 1000 and above
                                 if(activeCasesStr.indexOf(',')!=-1)
                                 {
-                                    activeCasesStr=activeCasesStr.substring(0,activeCasesStr.indexOf(','))+activeCasesStr.substring(activeCasesStr.indexOf(',')+1);
+                                    //activeCasesStr=activeCasesStr.substring(0,activeCasesStr.indexOf(','))+activeCasesStr.substring(activeCasesStr.indexOf(',')+1);
+                                    step1=activeCasesStr.split(",")
+                                    activeCasesStr=step1.join("")
                                 }
                                 x=parseInt(activeCasesStr)
                                 y=parseInt(beds[$scope.locInfo[i].state])
