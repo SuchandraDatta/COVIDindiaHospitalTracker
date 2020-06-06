@@ -8,8 +8,9 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 driver=webdriver.Chrome(executable_path="C:\\Users\\Suchandra Datta\\chromedriver_win32\\chromedriver")
 driver.get("https://www.covid19india.org/")
 try:
-    element_present = EC.presence_of_element_located((By.CSS_SELECTOR, 'Navbar'))
+    element_present = EC.presence_of_element_located((By.CSS_SELECTOR, '.state'))
     WebDriverWait(driver, 10).until(element_present)
+    print("APP CLASS ELEMENT FOUND")
 except:
     print("Timed out waiting for page to load")
 
@@ -50,6 +51,3 @@ json_string=json.dumps(data_dict_array)
 print(json_string)
 with open('dataFromScraping.json', 'w+') as f:
     json.dump(data_dict_array, f)
-
-
-
