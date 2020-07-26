@@ -44,7 +44,9 @@ function($scope, $http){
     "Tripura":"-1",
     "Arunachal Pradesh":"-1",
     "Meghalaya": "-1",
-    "Dadra and Nagar Haveli and Daman and Diu": "-1"
+    "Dadra and Nagar Haveli and Daman and Diu": "-1",
+    "Nagaland": "-1",
+    "Sikkim":"-1"
                         }
                         for(i=0;i<$scope.locInfo.length;i++)
                             {
@@ -64,6 +66,10 @@ function($scope, $http){
                                 {
                                     console.log("No info available")
                                     $scope.locInfo[i].activeCases="No info avaliable"
+                                }
+                                else if((y-x)<0)
+                                {
+                                    $scope.locInfo[i].activeCases="Beds exhausted"
                                 }
                                 else
                                 $scope.locInfo[i].activeCases=y-x

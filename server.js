@@ -2,6 +2,7 @@ const http = require('http');
 const url = require('url');
 const path = require('path');
 const fs = require('fs');
+const { decode } = require('punycode');
 
 const mimeTypes = {
 	"html": "text/html",
@@ -14,22 +15,11 @@ const mimeTypes = {
 };
 
 http.createServer(function(req, res){
-	var uri = url.parse(req.url).pathname;
-	var fileName = path.join(process.cwd(), unescape(uri));
-	console.log('Loading '+ uri);
-	var stats;
-
-	try{
-		stats = fs.lstatSync(fileName);
-	} catch(e){
-		res.writeHead(404, {'Content-type': 'text/plain'});
-		res.write('404 Not Found\n');
-		res.end();
-		return;
-	}
-
-	if(stats.isFile()){
-		var mimeType = mimeTypes[path.extname(fileName).split(".").reverse()[0]];
+	var uri = url.parse(req.url).pathname;//url.parse takes in a URL as argument and returns an object, each part of the URL is now a property of the returned object like uri.host, uri.pathname etc
+	var fileName = path.join(process.cwd(), decodeURI(uri));
+	//Use decodeURI as unescape is depreciated(source Mozilla docs) it converts string to a form taking into account the escape sequences like unescape('%u0107');  becomes "ć"
+		console.log("path.extname", path.extname(fileName).split("."))//Array like ['' 'html']
+		var mimeType = mimeTypes[path.extname(fileName).split(".")[1]];
 		/*Code for python starts*/
 		console.log(mimeType)
 		if(uri=='/indexAngularJS.html')
@@ -46,15 +36,7 @@ http.createServer(function(req, res){
 
 		var fileStream = fs.createReadStream(fileName);
 		fileStream.pipe(res);
-	} else if(stats.isDirectory()) {
-		res.writeHead(302, {
-			'Location': 'index.html'
-		});
-		res.end();
-	} else {
-		res.writeHead(500, {'Content-type':'text/plain'});
-		res.write('500 Internal Error\n');
-		res.end();
-	}
+	
 
 }).listen(1337);
+
