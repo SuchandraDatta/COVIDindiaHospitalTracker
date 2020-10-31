@@ -2,7 +2,6 @@ const http = require('http');
 const url = require('url');
 const path = require('path');
 const fs = require('fs');
-const { decode } = require('punycode');
 
 const mimeTypes = {
 	"html": "text/html",
@@ -15,8 +14,12 @@ const mimeTypes = {
 };
 
 http.createServer(function(req, res){
+	
+	try
+	{
 	var uri = url.parse(req.url).pathname;//url.parse takes in a URL as argument and returns an object, each part of the URL is now a property of the returned object like uri.host, uri.pathname etc
 	var fileName = path.join(process.cwd(), decodeURI(uri));
+	console.log("File name ", fileName)
 	//Use decodeURI as unescape is depreciated(source Mozilla docs) it converts string to a form taking into account the escape sequences like unescape('%u0107');  becomes "ć"
 		console.log("path.extname", path.extname(fileName).split("."))//Array like ['' 'html']
 		var mimeType = mimeTypes[path.extname(fileName).split(".")[1]];
@@ -36,6 +39,9 @@ http.createServer(function(req, res){
 
 		var fileStream = fs.createReadStream(fileName);
 		fileStream.pipe(res);
+	}
+	catch(Exception)
+	{}
 	
 
 }).listen(1337);

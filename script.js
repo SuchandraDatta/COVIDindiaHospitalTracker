@@ -5,7 +5,7 @@ app.config(['$routeProvider', function($routeProvider){
 }]).controller('MainCtrl', ['$scope', '$http', 
 function($scope, $http){
     console.log('hello world from controller');
-    $http.get('./dataFromScraping.json')
+    $http.get('./data/dataFromScraping.json')
         .then( function(response)
                     {   console.log(response.data)
                         console.log("\nPrinted the info from json")

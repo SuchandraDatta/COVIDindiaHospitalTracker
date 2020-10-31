@@ -3,15 +3,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+import config as cfg
 
-'''check='<html><body><div class="row"><div class="cell"><div class="state-name fadeInUp">Tamil Nadu</div><span class="Tooltip" style="position: relative;"><svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="16" y2="12"></line><line x1="12" x2="12.01" y1="8" y2="8"></line></svg><div></div></span></div><div class="cell statistic"><div class="delta is-confirmed"></div><div class="total">2,06,737</div></div><div class="cell statistic"><div class="total">52,273</div></div><div class="cell statistic"><div class="delta is-recovered"></div><div class="total">1,51,055</div></div><div class="cell statistic"><div class="delta is-deceased"></div><div class="total">3,409</div></div><div class="cell statistic"><div class="delta is-tested"></div><div class="total">2.3M</div></div></div></body></html>'
-#<div class="cell statistic"><div class="total">52,273</div></div>
-import re
-got_this=re.findall('<div class=\"total\">[0-9][0-9,]+</div>', str(check))
-got_this=got_this[1][19:-6]
-print(got_this)'''
-
-driver=webdriver.Chrome(executable_path="C:\\Users\\Suchandra Datta\\chromedriver_win32\\chromedriver")
+driver=webdriver.Chrome(executable_path=cfg.secret_info["executable_path_chrome_driver"])
 driver.get("https://www.covid19india.org/")
 try:
     element_present = EC.presence_of_element_located((By.CSS_SELECTOR, '.state-name'))
@@ -44,17 +38,15 @@ for rows in step1:
     i=i+1
     #input("Stop")
     cell_statistics=BeautifulSoup(str(all_rows[i]), 'lxml')
-    cell_statistics.find_all("div", class_="is-confirmed")
-    #print(cell_statistics)
-    #input("Stop")
+    #cell_statistics.find_all("div", class_="is-confirmed")
+
     '''soup=BeautifulSoup(str(rows), 'lxml')
     step2=soup.find_all("td")
 
     cases=re.findall(r'[0-9][0-9,]+|[0-9]+', str(step2[2]))'''
-    each_row=re.findall('<div class=\"total\">[0-9][0-9,]+</div>', str(cell_statistics))
-    each_row=each_row[1][19:-6]
-    #print(each_row)
-    #input("Stop")
+    each_row=re.findall('<div class=\"total\" title=\"[0-9]+\">', str(cell_statistics))
+    each_row=re.findall('title=\"[0-9]+\"', str(each_row[1]))
+    each_row=each_row[0][7:-1]
     activeCases.append(each_row)
 
 print("Active cases: ", activeCases)
@@ -70,5 +62,5 @@ import json
 print("Length of datadict: " , len(data_dict_array))
 json_string=json.dumps(data_dict_array)
 print(json_string)
-with open('dataFromScraping.json', 'w+') as f:
+with open('./data/dataFromScraping.json', 'w+') as f:
     json.dump(data_dict_array, f)

@@ -1,0 +1,3 @@
+config.py
+npm-debug
+__pycache__/**
