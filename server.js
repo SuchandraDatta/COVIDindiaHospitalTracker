@@ -10,7 +10,8 @@ const mimeTypes = {
 	"png": "image/png",
 	"js": "text/javascript",
 	"css": "text/css",
-	"json":"text/json"
+	"json":"text/json",
+	"webp":"image/webp"
 };
 
 http.createServer(function(req, res){

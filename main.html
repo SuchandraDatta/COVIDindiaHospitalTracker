@@ -5,7 +5,7 @@
             body
             {
                 text-align: center;
-                background-color: white;
+                color: white;
             }
             .card-layout
             {
@@ -25,8 +25,8 @@
             }
             .box2
             {
-                background: linear-gradient(45deg, #148dff, transparent);
-                width: 90%;
+                background-image: url('./images/card_backpic.webp');
+                width: 100%;
             }
         </style>
     </head>
@@ -44,9 +44,9 @@
             </table>-->
             <div style="position: relative; top: 20vh;">
             <div class="card-layout" ng-repeat="x in locInfo">
-                <div class="flex-item box1">
+                <!--<div class="flex-item box1">
                     <img src="./images/logo.jpg" height="125" width="100%"> 
-                </div>
+                </div>-->
                 <div class="flex-item box2"> 
                     <h2>{{x.state}}</h2>
                     <h3>Beds available : {{x.activeCases}}</h3>
