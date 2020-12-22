@@ -1,56 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            body
-            {
-                text-align: center;
-                color: white;
-            }
-            .card-layout
-            {
-                height: 20vh;
-                width: 60vw;
-                position: relative;
-                left: 20vw;
-                margin-top: 5vw;
-                margin-bottom: 5vw;
-                display: flex;
-                justify-content: center;
-                box-shadow: 0px 0px 30px 15px rgba(255,255,255,0.6);
-            }
-            .box1
-            {
-                width: 50%;
-            }
-            .box2
-            {
-                background-image: url('./images/card_backpic.webp');
-                width: 100%;
-            }
-        </style>
+        <link rel="stylesheet" href="./styles/stylesForMain.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
-            <!--<table cellpadding="5" width="100%"  align="center">
-                <tr>
-                    <th colspan="3"  >STATE</th>
-                    <th colspan="3"  >HOSPITAL BEDS AVAILABLE(APPROX.)</th>
-                </tr>
-                <tr ng-repeat="x in locInfo">
-                    <td colspan="3" >{{x.state}}</td>
-                    <td >{{x.activeCases}}</td>
-                </tr>
-            </table>-->
+            <h1 style="color: white;">COVID 19 HOSPITAL BED TRACKER</h1>
             <div style="position: relative; top: 20vh;">
-            <div class="card-layout" ng-repeat="x in locInfo">
-                <!--<div class="flex-item box1">
-                    <img src="./images/logo.jpg" height="125" width="100%"> 
-                </div>-->
-                <div class="flex-item box2"> 
-                    <h2>{{x.state}}</h2>
-                    <h3>Beds available : {{x.activeCases}}</h3>
-                </div>
+            <div class="flex-container">
+                @<div class="flex-item card-layout">
+                    <div id="statename"><h2>State: { </h2></div>
+                    <div id="text-container">
+                    <p>Active COVID19 cases: { </p>
+                    <p>Total hospital beds: { </p>
+                    <p>Remaining beds: { </p></div>
+                </div>@
             </div>
             </div>
                 

@@ -2,7 +2,7 @@ const http = require('http');
 const url = require('url');
 const path = require('path');
 const fs = require('fs');
-
+const utils = require('./utils/utils_for_template')
 const mimeTypes = {
 	"html": "text/html",
 	"jpeg": "image/jpeg",
@@ -26,24 +26,36 @@ http.createServer(function(req, res){
 		var mimeType = mimeTypes[path.extname(fileName).split(".")[1]];
 		/*Code for python starts*/
 		console.log(mimeType)
-		if(uri=='/indexAngularJS.html')
+		if(uri=='/main.html')
 		{
-			var spawn=require('child_process').spawn;
-			var Newprocess=spawn('python', ['./hospitalTrackerScrapingSite.py']);
-			Newprocess.stdout.on('data', function(data) { 
-				console.log(data.toString()); 
+			let insert_data_in_template = ""
+
+			var spawn=require('child_process').spawn;//Spawn a new process
+			var Newprocess=spawn('python', ['./hospitalTrackerScrapingSite.py']);//Execute the python script for scraping
+			Newprocess.stdout.on('data', function(data_from_python) { 
+				//on receiving output from python where data_from_python is whatever python prints to console during processing, so if there are prints due to exceptions, they'll show up and cause a JSON parse error later on
+				insert_data_in_template=data_from_python.toString()//This is the data from python containing array of JS objects
+				file_contents=fs.readFile('main.html','utf-8', (err, data)=>{
+				final_output = utils.augment_template(data, insert_data_in_template)//Custom code to inject the data_from_python into the main.html file
+				res.writeHead(200, { 'Content-type': 'text/html'})
+				res.write(final_output)
+				return res.end()
+				//response.end() signals to the server that all headers and body has been sent, the server must consider the message to be complete. res.end() MUST BE CALLED at end of each response.
+				})
 			}) 
 			console.log("SUCCESSFULLY EXECUTED THE SCRIPT")
 		}
-		/*Code for python ends*/
-		res.writeHead(200, {'Content-type': mimeType});
+		else
+		{
+			//Execute this for requests for all other files such as image files.
+			res.writeHead(200, {'Content-type': mimeType});
+			var fileStream = fs.createReadStream(fileName);
+			fileStream.pipe(res);
+		}
 
-		var fileStream = fs.createReadStream(fileName);
-		fileStream.pipe(res);
 	}
 	catch(Exception)
 	{}
 	
 
 }).listen(1337);
-

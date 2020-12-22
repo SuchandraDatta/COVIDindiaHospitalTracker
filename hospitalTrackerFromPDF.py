@@ -6,7 +6,7 @@ headers={'User-Agent' : userAgent}
 import PyPDF2 
   
 # creating a pdf file object 
-pdfFileObj = open('dummy.pdf', 'rb') 
+pdfFileObj = open('./data/dummy.pdf', 'rb') 
   
 # creating a pdf reader object 
 pdfReader = PyPDF2.PdfFileReader(pdfFileObj) 
