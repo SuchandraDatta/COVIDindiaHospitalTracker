@@ -86,7 +86,8 @@ beds = {
     "Meghalaya": "-1",
     "Dadra and Nagar Haveli and Daman and Diu": "-1",
     "Nagaland": "-1",
-    "Sikkim":"-1"
+    "Sikkim":"-1",
+    "Lakshadweep":"-1"
                         }
 for i in range(0, len(activeCases)-1):
     data_dict_term={}
