@@ -34,14 +34,24 @@ http.createServer(function(req, res){
 			var Newprocess=spawn('python', ['./hospitalTrackerScrapingSite.py']);//Execute the python script for scraping
 			Newprocess.stdout.on('data', function(data_from_python) { 
 				//on receiving output from python where data_from_python is whatever python prints to console during processing, so if there are prints due to exceptions, they'll show up and cause a JSON parse error later on
-				insert_data_in_template=data_from_python.toString()//This is the data from python containing array of JS objects
-				file_contents=fs.readFile('main.html','utf-8', (err, data)=>{
-				final_output = utils.augment_template(data, insert_data_in_template)//Custom code to inject the data_from_python into the main.html file
-				res.writeHead(200, { 'Content-type': 'text/html'})
-				res.write(final_output)
-				return res.end()
+				console.log("We got: ", data_from_python)
+				if(data_from_python!=-1)
+				{
+					insert_data_in_template=data_from_python.toString()//This is the data from python containing array of JS objects
+					file_contents=fs.readFile('main.html','utf-8', (err, data)=>{
+					final_output = utils.augment_template(data, insert_data_in_template)//Custom code to inject the data_from_python into the main.html file
+					res.writeHead(200, { 'Content-type': 'text/html'})
+					res.write(final_output)
+					return res.end()
+					})
 				//response.end() signals to the server that all headers and body has been sent, the server must consider the message to be complete. res.end() MUST BE CALLED at end of each response.
-				})
+			    }
+			    else
+			    {
+			    	res.writeHead(200, {"Content-type": "text/html"})
+			    	fs.createReadStream("web_struct_upd_try_again_later.html").pipe(res)
+			    }
+
 			}) 
 			console.log("SUCCESSFULLY EXECUTED THE SCRIPT")
 		}
