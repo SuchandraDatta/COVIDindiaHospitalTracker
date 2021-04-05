@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from configs import config as cfg
+import traceback
 
 driver=webdriver.Chrome(executable_path=cfg.secret_info["executable_path_chrome_driver"])
 driver.get("https://www.covid19india.org/")
@@ -101,6 +102,9 @@ try:
         else:
             data_dict_term["totalBeds"]=beds[data_dict_term["state"]]
             data_dict_term["bedsLeft"]=int(data_dict_term["totalBeds"]) - int(data_dict_term["activeCases"])
+            if(data_dict_term["bedsLeft"] < 0):
+                data_dict_term["bedsLeft"] = 0
+                
         data_dict_array.append(data_dict_term)
 
     #print(data_dict_array)
@@ -111,6 +115,7 @@ try:
     with open('./data/dataFromScraping.json', 'w+') as f:
         json.dump(data_dict_array, f)
 except:
+    #traceback.print_exc()
     print(-1)
     pass
 
